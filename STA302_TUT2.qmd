@@ -54,6 +54,11 @@ head(cleaned_data)
 ```
 
 ```{r}
+# Look at the column names so that I can select the one I want to analyze.
+names(cleaned_data)
+```
+
+```{r}
 # I am going to analyze the wind direction of the beaches
 cleaned_data <-
   cleaned_data |>
