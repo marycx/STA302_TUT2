@@ -1,0 +1,93 @@
+---
+### Preamble ###
+title: "STA302_TUT2: Clean opendatatoronto dataset and graph"
+author: "Mary Cheng"
+Email: maryc.cheng@mail.utoronto.ca
+Date: 2024 - 01 - 06
+---
+
+```{r}
+# Install relevant packages
+install.packages("opendatatoronto")
+install.packages(tidyverse)
+install.packages(janitor)
+install.packages(dplyr)
+```
+
+```{r}
+# Load packages
+library(tidyverse)
+library(janitor)
+library(dplyr)
+library(opendatatoronto)
+```
+
+```{r}
+# get package about Toronto beach observations
+package <- show_package("toronto-beaches-observations")
+package
+
+# get all resources for this package
+resources <- list_package_resources("toronto-beaches-observations")
+
+datastore_resources <- filter(resources, tolower(format) %in% c('csv', 'geojson'))
+
+```
+
+```{r}
+# load the first datastore resource as a sample to see if it looks correct
+data <- filter(datastore_resources, row_number()==1) %>% get_resource()
+
+# gain an overview of the dataset
+data
+```
+
+```{r}
+# Basic cleaning
+
+# Make the names easier to type
+cleaned_data <-
+  clean_names(data)
+
+# Have a look at the first six rows
+head(cleaned_data)
+```
+
+```{r}
+# I am going to analyze the wind direction of the beaches
+cleaned_data <-
+  cleaned_data |>
+  select(
+    wind_direction
+  )
+```
+
+```{r}
+# Here, do some checking to make sure
+names(cleaned_data)
+```
+
+```{r}
+# Try to gain an overview of the dataset that I am interested in analyzing
+
+#look at the unique values in the “wind_direction” column
+cleaned_data$wind_direction |>
+  unique()
+```
+
+```{r}
+# get a quick count of how many beaches have the following wind directions using count()
+cleaned_data |>
+  count(wind_direction)
+```
+
+```{r}
+# Build the bar graph that I'm interested in
+cleaned_data |>
+  ggplot(aes(x = wind_direction)) +
+  geom_bar() +
+  theme_minimal() +
+  labs(x = "Wind Direction", y = "count") 
+```
+
+## 
