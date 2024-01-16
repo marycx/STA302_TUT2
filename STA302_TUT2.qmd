@@ -54,7 +54,7 @@ head(cleaned_data)
 ```
 
 ```{r}
-# Look at the column names so that I can select the one I want to analyze.
+# Look at the column names so that I can select the one I want to analyze
 names(cleaned_data)
 ```
 
@@ -68,7 +68,7 @@ cleaned_data <-
 ```
 
 ```{r}
-# Here, do some checking to make sure
+# Here, do some checking to make sure that I only selected wind_direction in all the data
 names(cleaned_data)
 ```
 
